@@ -5,6 +5,8 @@ Meu nome é André Bellico e este é o projeto que desenvolvi para o teste técn
 
 ---
 
+## https://conecta-suite-3b120.web.app/#/ (Hospedado na Firebase)
+
 ## 🧾 Sobre o Projeto
 
 Este projeto simula um **fluxo de self-checkout para um produto SaaS**, onde o usuário pode:
