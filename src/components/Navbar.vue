@@ -36,7 +36,7 @@
 
 .logo {
   height: 30px;
-  margin-right: 16px; /* mr-4 (assuming 4 units = 16px) */
+  margin-right: 16px;
 }
 
 .nav-links {
@@ -49,15 +49,15 @@
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  padding: 8px 16px; /* mx-2 (assuming 2 units = 8px padding on each side) */
-  margin: 0 8px; /* mx-2 */
+  padding: 8px 16px;
+  margin: 0 8px;
   font-weight: 400;
-  color: inherit; /* Inherit text color */
+  color: inherit;
   transition: color 0.3s ease;
 }
 
 .nav-button:hover {
-  color: #613fc8; /* Example hover effect */
+  color: #613fc8;
 }
 
 .login {
@@ -66,7 +66,7 @@
 }
 
 .spacer {
-  flex-grow: 1; /* v-spacer */
+  flex-grow: 1;
 }
 
 .auth-buttons {
@@ -75,35 +75,34 @@
 }
 
 .demo-button {
-  background-color: #613fc8; /* color="#613FC8" */
-  color: white; /* white--text */
+  background-color: #613fc8;
+  color: white;
   border: none;
-  border-radius: 4px; /* Example border-radius */
-  padding: 8px 16px; /* mx-1 (assuming 1 unit = 4px padding, but using 8px 16px for better button size) */
-  margin: 0 4px; /* mx-1 */
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 0 4px;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500; /* Example font-weight */
+  font-weight: 500;
   transition: background-color 0.3s ease;
 }
 
 .demo-button:hover {
-  background-color: #331d6e; /* Example hover effect */
+  background-color: #331d6e;
 }
 
 .main-content {
   flex-grow: 1;
-  padding-top: 100px; /* Add padding to account for fixed header */
+  padding-top: 100px;
 }
 
 .main-background {
   background-color: #ffffff;
-  min-height: calc(100vh - 100px); /* Adjust min-height */
+  min-height: calc(100vh - 100px);
 }
 
 .container {
   width: 100%;
-  padding: 20px; /* Add some padding */
-  /* fluid container might not need max-width */
+  padding: 20px;
 }
 </style>

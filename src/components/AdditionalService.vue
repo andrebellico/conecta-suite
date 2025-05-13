@@ -93,13 +93,13 @@ const onRemove = () => {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #331d6e; /* --primary-dark */
+  color: #331d6e;
   text-align: center;
 }
 
 .section-subtitle {
   font-size: 1.125rem;
-  color: #6e6e8f; /* --text-light */
+  color: #6e6e8f;
   text-align: center;
   margin-bottom: 3rem;
 }
