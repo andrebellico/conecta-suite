@@ -52,7 +52,7 @@ const onConfirm = () => {
       <p class="section-subtitle">
         Revise os detalhes da sua contratação antes de prosseguir
       </p>
-      <div class="summary-container">
+      <div class="container">
         <AdditionalService @close="AddService()" @removeService="onRemove()" />
         <div class="summary-container">
           <div class="summary-card">
@@ -221,15 +221,26 @@ input[type="radio"] {
   justify-content: center;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
 .summary-card {
   background-color: #ffffff;
   color: #333;
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 400px;
+  max-width: 600px; /* Add a max-width for larger screens */
   height: fit-content;
-  width: 100%; /* Make card take full width up to max-width */
+  width: 100%; /* Make card take full width */
   font-family: "Arial", sans-serif;
 }
 
@@ -263,7 +274,7 @@ input[type="radio"] {
 
 .summary-value {
   font-weight: bold;
-  color: #613fc8; /* Purple color for values */
+  color: #613fc8;
 }
 
 .summary-divider {
@@ -279,21 +290,12 @@ input[type="radio"] {
   margin-bottom: 1rem;
 }
 
-.summary-note {
-  display: flex;
-  align-items: flex-start;
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 1rem;
-}
-
 .info-icon {
   font-size: 1rem;
   margin-right: 0.5rem;
   color: #613fc8;
 }
 
-/* Styling for the features list within the summary-content */
 .summary-content h3 {
   color: #333; /* Adjusted color */
   font-size: 1.1rem;

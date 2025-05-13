@@ -71,7 +71,7 @@ const onRemove = () => {
 
 <style scoped>
 .section {
-  padding: 3rem;
+  padding: 1rem;
 }
 
 .fade-in {
@@ -186,6 +186,8 @@ const onRemove = () => {
 
 .deployment-price-container {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   margin-top: 1.5rem;

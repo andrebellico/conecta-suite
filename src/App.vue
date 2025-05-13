@@ -12,7 +12,7 @@ export default {
   <v-app>
     <v-main class="main-background">
       <Navbar />
-      <v-container class="pa-10">
+      <v-container class="pa-4 pa-md-10">
         <router-view />
       </v-container>
     </v-main>
