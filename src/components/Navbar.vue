@@ -10,11 +10,13 @@ const toggleMobileMenu = () => {
 
 <template>
   <header class="app-header">
-    <img
-      src="../assets/conecta-suite-logo.svg"
-      alt="Conecta SaaS Logo"
-      class="logo"
-    />
+    <router-link to="/">
+      <img
+        src="../assets/conecta-suite-logo.svg"
+        alt="Conecta SaaS Logo"
+        class="logo"
+      />
+    </router-link>
 
     <button class="menu-toggle" @click="toggleMobileMenu">
       <span class="hamburger-icon"></span>

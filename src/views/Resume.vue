@@ -10,6 +10,7 @@ const props = defineProps({
   },
 });
 const selectedPlanDetails = ref(null);
+const loading = ref(false);
 
 const planSelected = plans.find((plan) => plan.id === props.planId);
 selectedPlanDetails.value = planSelected;
@@ -33,14 +34,18 @@ const onRemove = () => {
 };
 
 const onConfirm = () => {
-  router.push({
-    name: "finish",
-    params: {
-      planId: props.planId,
-      total: total.value,
-      showService: showService.value,
-    },
-  });
+  loading.value = true;
+  setTimeout(() => {
+    router.push({
+      name: "finish",
+      params: {
+        planId: props.planId,
+        total: total.value,
+        showService: showService.value,
+      },
+    });
+    loading.value = false;
+  }, 2000);
 };
 </script>
 
@@ -121,7 +126,13 @@ const onConfirm = () => {
                 </li>
               </ul>
             </div>
-            <button class="confirm-button" @click="onConfirm">Confirmar</button>
+            <button
+              class="confirm-button"
+              @click="onConfirm"
+              :disabled="loading"
+            >
+              {{ loading ? "Carregando..." : "Confirmar" }}
+            </button>
           </div>
         </div>
       </div>
