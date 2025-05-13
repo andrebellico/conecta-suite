@@ -1,29 +1,38 @@
-<script setup>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { State, Getter, Action } from "vuex-class"; // Importar decorators
 import FinishCard from "../components/FinishCard.vue";
-import { defineProps } from "vue";
 
-const props = defineProps({
-  planId: {
-    type: [String, Number],
-    required: true,
+interface Plan {
+  id: number;
+  name: string;
+  price: number;
+  features: string[];
+}
+
+@Component({
+  components: {
+    FinishCard,
   },
-  total: {
-    type: [String, Number],
-    required: true,
-  },
-  showService: {
-    type: [Boolean, String],
-    required: true,
-  },
-});
+})
+export default class FinishView extends Vue {
+  @State("selectedPlan") selectedPlan!: Plan | null;
+  @State("showAdditionalService") showAdditionalService!: boolean;
+  @Getter("getTotal") getTotal!: number;
+
+  get planId(): number | undefined {
+    const selectedPlan = this.$store.state.selectedPlan as Plan | null;
+    return selectedPlan?.id;
+  }
+}
 </script>
 
 <template>
   <div>
     <FinishCard
-      :planId="props.planId"
-      :total="props.total"
-      :showService="props.showService"
+      :selectedPlan="selectedPlan"
+      :total="getTotal"
+      :showService="showAdditionalService"
     />
   </div>
 </template>

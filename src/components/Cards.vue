@@ -1,38 +1,27 @@
-<script setup>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { State, Getter, Action } from "vuex-class"; // Importar decorators
 import router from "@/router";
-import { ref, watch, defineProps } from "vue";
 
-const props = defineProps({
-  plans: {
-    type: Array,
-    required: true,
-  },
-  selectedPlan: {
-    type: Object,
-    default: null,
-  },
-  currentStep: {
-    type: Number,
-    required: true,
-  },
-});
+interface Plan {
+  id: number;
+  name: string;
+  price: number;
+  features: string[];
+}
 
-const emit = defineEmits(["update:selectedPlan", "update:currentStep"]);
+@Component
+export default class Cards extends Vue {
+  @State("plans") plans!: Plan[];
+  @State("selectedPlan") selectedPlan!: Plan | null;
 
-const selectedPlanInternal = ref(props.selectedPlan);
-watch(
-  () => props.selectedPlan,
-  (newVal) => {
-    selectedPlanInternal.value = newVal;
+  @Action("selectPlan") selectPlanAction!: (plan: Plan | null) => void;
+
+  handleSelectPlan(plan: Plan) {
+    this.selectPlanAction(plan);
+    router.push({ name: "resume", params: { planId: plan.id.toString() } });
   }
-);
-
-const handleSelectPlan = (plan) => {
-  selectedPlanInternal.value = plan;
-  emit("update:selectedPlan", plan);
-  const planId = selectedPlanInternal.value.id;
-  router.push({ name: "resume", params: { planId: planId } });
-};
+}
 </script>
 
 <template>
@@ -48,7 +37,7 @@ const handleSelectPlan = (plan) => {
         :key="plan.id"
         class="plan-card"
         :class="{
-          selected: selectedPlanInternal && selectedPlanInternal.id === plan.id,
+          selected: selectedPlan && selectedPlan.id === plan.id,
           popular: plan.id === 2,
         }"
         @click="handleSelectPlan(plan)"

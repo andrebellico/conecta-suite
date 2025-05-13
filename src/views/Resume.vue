@@ -1,56 +1,61 @@
-<script setup>
-import { defineProps, ref } from "vue";
-import { plans } from "./PlansView.vue";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapGetters, mapActions } from "vuex";
 import AdditionalService from "../components/AdditionalService.vue";
-import router from "@/router";
-const props = defineProps({
-  planId: {
-    type: [String, Number],
-    required: true,
+import { Route } from "vue-router"; // Importar Route para tipagem
+
+interface Plan {
+  id: number;
+  name: string;
+  price: number;
+  features: string[];
+}
+
+@Component({
+  components: {
+    AdditionalService,
   },
-});
-const selectedPlanDetails = ref(null);
-const loading = ref(false);
+  computed: {
+    ...mapState(["selectedPlan", "showAdditionalService", "loading"]),
+    ...mapGetters(["getTotal", "getAdditionalServicePrice"]),
+  },
+  methods: {
+    ...mapActions([
+      "addAdditionalService",
+      "removeAdditionalService",
+      "confirmSelection",
+    ]),
+  },
+})
+export default class ResumeView extends Vue {
+  selectedPlan!: Plan | null;
+  showAdditionalService!: boolean;
+  loading!: boolean;
+  getTotal!: number;
+  getAdditionalServicePrice!: number;
 
-const planSelected = plans.find((plan) => plan.id === props.planId);
-selectedPlanDetails.value = planSelected;
+  addAdditionalService!: () => void;
+  removeAdditionalService!: () => void;
+  confirmSelection!: (router: any) => Promise<void>;
 
-const total = ref(selectedPlanDetails.value.price);
+  radios: string | null = null;
 
-const showService = ref(false);
+  onAddService() {
+    this.addAdditionalService();
+  }
 
-const servicePrice = 50;
+  onRemoveService() {
+    this.removeAdditionalService();
+  }
 
-const AddService = () => {
-  total.value = total.value + servicePrice;
-  showService.value = true;
-  return total, showService;
-};
-
-const onRemove = () => {
-  total.value = total.value - servicePrice;
-  showService.value = false;
-  return total, showService;
-};
-
-const onConfirm = () => {
-  loading.value = true;
-  setTimeout(() => {
-    router.push({
-      name: "finish",
-      params: {
-        planId: props.planId,
-        total: total.value,
-        showService: showService.value,
-      },
-    });
-    loading.value = false;
-  }, 2000);
-};
+  onConfirm() {
+    this.confirmSelection(this.$router);
+  }
+}
 </script>
 
 <template>
-  <div v-if="selectedPlanDetails" class="section fade-in">
+  <div v-if="selectedPlan" class="section fade-in">
     <router-view></router-view>
     <div v-if="$route.name !== 'finish'">
       <h2 class="section-title">Resumo da contratação</h2>
@@ -58,7 +63,10 @@ const onConfirm = () => {
         Revise os detalhes da sua contratação antes de prosseguir
       </p>
       <div class="container">
-        <AdditionalService @close="AddService()" @removeService="onRemove()" />
+        <AdditionalService
+          @close="onAddService()"
+          @removeService="onRemoveService()"
+        />
         <div class="summary-container">
           <div class="summary-card">
             <div class="summary-header">
@@ -68,20 +76,18 @@ const onConfirm = () => {
             <div class="summary-content">
               <div class="summary-item">
                 <span>Plano selecionado</span>
-                <span class="summary-value">{{
-                  selectedPlanDetails.name
-                }}</span>
+                <span class="summary-value">{{ selectedPlan.name }}</span>
               </div>
               <div class="summary-item">
                 <span>Valor do plano</span>
                 <span class="summary-value"
-                  >R$ {{ selectedPlanDetails.price.toFixed(2) }}/mês</span
+                  >R$ {{ selectedPlan.price.toFixed(2) }}/mês</span
                 >
               </div>
-              <div v-if="showService" class="summary-item">
+              <div v-if="showAdditionalService" class="summary-item">
                 <span>Adicional do Serviço</span>
                 <span class="summary-value"
-                  >R$ {{ servicePrice.toFixed(2) }}</span
+                  >R$ {{ getAdditionalServicePrice.toFixed(2) }}</span
                 >
               </div>
 
@@ -114,12 +120,12 @@ const onConfirm = () => {
               </div>
               <div class="summary-total">
                 <span>Total</span>
-                <span class="summary-value">R$ {{ total.toFixed(2) }}</span>
+                <span class="summary-value">R$ {{ getTotal.toFixed(2) }}</span>
               </div>
               <h3>Recursos:</h3>
               <ul>
                 <li
-                  v-for="(feature, index) in selectedPlanDetails.features"
+                  v-for="(feature, index) in selectedPlan.features"
                   :key="index"
                 >
                   {{ feature }}
@@ -139,7 +145,7 @@ const onConfirm = () => {
     </div>
   </div>
 
-  <div v-else-if="!selectedPlanDetails" class="summary-container">
+  <div v-else class="summary-container">
     <p>Nenhum plano selecionado.</p>
   </div>
 </template>
@@ -216,7 +222,7 @@ input[type="radio"] {
   color: #613fc8;
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem; /* Adjusted margin */
+  margin-bottom: 0.5rem;
   text-align: center;
 }
 
@@ -224,7 +230,7 @@ input[type="radio"] {
   font-size: 1rem;
   color: #666;
   text-align: center;
-  margin-bottom: 2rem; /* Adjusted margin */
+  margin-bottom: 2rem;
 }
 
 .summary-container {
@@ -250,9 +256,9 @@ input[type="radio"] {
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 600px; /* Add a max-width for larger screens */
+  max-width: 600px;
   height: fit-content;
-  width: 100%; /* Make card take full width */
+  width: 100%;
   font-family: "Arial", sans-serif;
 }
 
@@ -309,12 +315,12 @@ input[type="radio"] {
 }
 
 .summary-content h3 {
-  color: #333; /* Adjusted color */
+  color: #333;
   font-size: 1.1rem;
   margin-top: 1.5rem;
   margin-bottom: 0.8rem;
-  border-bottom: none; /* Removed border */
-  padding-bottom: 0; /* Removed padding */
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .summary-content ul {

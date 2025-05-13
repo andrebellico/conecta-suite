@@ -1,16 +1,14 @@
 <script setup>
 import router from "@/router";
-import { plans } from "@/views/PlansView.vue";
 import { ref } from "vue";
 
-const selectedPlan = ref(null);
 const props = defineProps({
-  planId: {
-    type: [String, Number],
+  selectedPlan: {
+    type: Object,
     required: true,
   },
   total: {
-    type: [String, Number],
+    type: Number,
     required: true,
   },
   showService: {
@@ -20,9 +18,6 @@ const props = defineProps({
 });
 
 console.log(props);
-
-const planSelected = plans.find((plan) => plan.id === props.planId);
-selectedPlan.value = planSelected;
 
 const nextBillingDate = ref(new Date());
 nextBillingDate.value.setDate(nextBillingDate.value.getDate() + 30);
@@ -46,27 +41,24 @@ const backToHome = () => {
       <div class="confirmation-details">
         <div class="confirmation-item">
           <span>Plano</span>
-          <span class="confirmation-value">{{ selectedPlan.name }}</span>
+          <span class="confirmation-value">{{ props.selectedPlan.name }}</span>
         </div>
         <div class="confirmation-item">
           <span>Valor mensal</span>
           <span class="confirmation-value"
-            >R$ {{ selectedPlan.price.toFixed(2) }}</span
+            >R$ {{ props.selectedPlan.price.toFixed(2) }}</span
           >
         </div>
         <div class="confirmation-item">
           <span>Total</span>
           <span class="confirmation-value"
-            >R$ {{ parseFloat(props.total).toFixed(2) }}</span
+            >R$ {{ props.total.toFixed(2) }}</span
           >
         </div>
         <div class="confirmation-item" v-if="props.showService">
           <span>Serviço de implantação</span>
           <span class="confirmation-value"
-            >R$
-            {{
-              (parseFloat(props.total) - selectedPlan.price).toFixed(2)
-            }}</span
+            >R$ {{ (props.total - props.selectedPlan.price).toFixed(2) }}</span
           >
         </div>
         <div class="confirmation-item">

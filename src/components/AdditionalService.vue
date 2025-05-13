@@ -1,22 +1,23 @@
-<script setup>
-import { ref } from "vue";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { State, Getter, Action } from "vuex-class";
 
-const price = ref(50.0);
+@Component
+export default class AdditionalService extends Vue {
+  @State("showAdditionalService") showAdditionalService!: boolean;
+  @Getter("getAdditionalServicePrice") additionalServicePrice!: number;
 
-const emit = defineEmits(["close", "removeService"]);
+  @Action("addAdditionalService") addAdditionalServiceAction!: () => void;
+  @Action("removeAdditionalService") removeAdditionalServiceAction!: () => void;
 
-const toggleButton = ref(false);
+  onClick() {
+    this.addAdditionalServiceAction();
+  }
 
-const onClick = () => {
-  emit("close");
-  toggleButton.value = true;
-  return toggleButton;
-};
-const onRemove = () => {
-  emit("removeService");
-  toggleButton.value = false;
-  return toggleButton;
-};
+  onRemove() {
+    this.removeAdditionalServiceAction();
+  }
+}
 </script>
 
 <template>
@@ -52,10 +53,12 @@ const onRemove = () => {
           <div class="deployment-price-container">
             <div class="deployment-price">
               <span class="currency">R$</span>
-              <span class="amount">{{ price.toFixed(2) }}</span>
+              <span class="amount">{{
+                additionalServicePrice.toFixed(2)
+              }}</span>
             </div>
             <div class="deployment-selected">
-              <div v-if="toggleButton">
+              <div v-if="showAdditionalService">
                 <v-btn @click="onRemove()">Remover Serviço</v-btn>
               </div>
               <div v-else>
@@ -100,20 +103,19 @@ const onRemove = () => {
   margin-bottom: 3rem;
 }
 
-/* Estilos para serviço de implantação */
 .deployment-container {
   max-width: 800px;
   margin: 0 auto 3rem;
 }
 
 .deployment-card {
-  border: 2px solid #e2e8f0; /* --border */
+  border: 2px solid #e2e8f0;
   border-radius: 1rem;
   padding: 2.5rem;
   position: relative;
   transition: all 0.3s ease;
   cursor: pointer;
-  background-color: #ffffff; /* --background */
+  background-color: #ffffff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -126,7 +128,7 @@ const onRemove = () => {
   position: absolute;
   top: -12px;
   right: 30px;
-  background: linear-gradient(90deg, #f6ad55 0%, #f59e0b 100%); /* --warning */
+  background: linear-gradient(90deg, #f6ad55 0%, #f59e0b 100%);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
@@ -149,12 +151,12 @@ const onRemove = () => {
 .deployment-content h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #331d6e; /* --primary-dark */
+  color: #331d6e;
 }
 
 .deployment-content p {
   margin-bottom: 1.5rem;
-  color: #4a4a68; /* --text-medium */
+  color: #4a4a68;
   line-height: 1.6;
 }
 
@@ -171,11 +173,11 @@ const onRemove = () => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #4a4a68; /* --text-medium */
+  color: #4a4a68;
 }
 
 .feature-icon {
-  color: #613fc8; /* --primary */
+  color: #613fc8;
   font-weight: bold;
 }
 
@@ -191,7 +193,7 @@ const onRemove = () => {
 .deployment-price {
   display: flex;
   align-items: baseline;
-  color: #613fc8; /* --primary */
+  color: #613fc8;
 }
 
 .currency {
@@ -206,7 +208,6 @@ const onRemove = () => {
   line-height: 1;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .section-title {
     font-size: 1.5rem;
