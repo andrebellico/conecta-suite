@@ -224,6 +224,7 @@ input[type="radio"] {
 .container {
   display: flex;
   justify-content: center;
+  gap: 12px;
 }
 
 @media (max-width: 768px) {

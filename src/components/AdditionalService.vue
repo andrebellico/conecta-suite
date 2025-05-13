@@ -70,10 +70,6 @@ const onRemove = () => {
 </template>
 
 <style scoped>
-.section {
-  padding: 1rem;
-}
-
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -171,7 +167,6 @@ const onRemove = () => {
 }
 
 .deployment-content li {
-  padding: 0.5rem 0;
   position: relative;
   display: flex;
   align-items: center;
@@ -213,10 +208,6 @@ const onRemove = () => {
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .section {
-    padding: 2rem 1.5rem;
-  }
-
   .section-title {
     font-size: 1.5rem;
   }
