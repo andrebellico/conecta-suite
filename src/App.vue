@@ -1,20 +1,27 @@
+<script>
+import Navbar from "./components/Navbar.vue";
+
+export default {
+  name: "App",
+  components: {
+    Navbar,
+  },
+};
+</script>
 <template>
   <v-app>
-    <v-main>
-      <v-container>
+    <v-main class="main-background">
+      <Navbar />
+      <v-container class="pa-10">
         <router-view />
-        <v-btn color="primary"> Vuetify Button </v-btn>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
-<script>
-export default {
-  name: "App",
-};
-</script>
-
 <style lang="scss">
-// Your styles here
+.main-background {
+  background-color: #eceffad4;
+  min-height: 100vh;
+}
 </style>
