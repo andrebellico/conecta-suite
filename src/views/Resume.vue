@@ -2,7 +2,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapGetters, mapActions } from "vuex";
 import AdditionalService from "../components/AdditionalService.vue";
-import { Route } from "vue-router"; // Importar Route para tipagem
 
 interface Plan {
   id: number;
