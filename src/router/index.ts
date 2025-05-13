@@ -16,12 +16,15 @@ const routes: Array<RouteConfig> = [
     path: "/resume/:planId",
     name: "resume",
     component: Resume,
-    props: true
-  },
-  {
-    path: "resume/:planId/finish",
-    name: "finish",
-    component: Finish,
+    props: true,
+    children: [
+      {
+        path: "finish",
+        name: "finish",
+        component: Finish,
+        props: true 
+      }
+    ]
   }
 ];
 

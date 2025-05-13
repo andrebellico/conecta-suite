@@ -1,39 +1,37 @@
 <template>
-    <header class="app-header">
-      <img
-        src="../assets/conecta-suite-logo.svg"
-        alt="Conecta SaaS Logo"
-        class="logo"
-      />
+  <header class="app-header">
+    <img
+      src="../assets/conecta-suite-logo.svg"
+      alt="Conecta SaaS Logo"
+      class="logo"
+    />
 
-      <nav class="nav-links">
-        <button class="nav-button">Soluções</button>
-        <button class="nav-button">Sobre</button>
-        <button class="nav-button">Planos</button>
-        <button class="nav-button">Blog</button>
-        <button class="nav-button">Materiais</button>
-        <button class="nav-button">Contato</button>
-      </nav>
+    <nav class="nav-links">
+      <button class="nav-button">Soluções</button>
+      <button class="nav-button">Sobre</button>
+      <button class="nav-button">Planos</button>
+      <button class="nav-button">Blog</button>
+      <button class="nav-button">Materiais</button>
+      <button class="nav-button">Contato</button>
+    </nav>
 
-      <div class="spacer"></div>
+    <div class="spacer"></div>
 
-      <div class="auth-buttons">
-        <button class="demo-button">Solicitar demo</button>
-        <button class="nav-button login">Login</button>
-      </div>
-    </header>
+    <div class="auth-buttons">
+      <button class="demo-button">Solicitar demo</button>
+      <button class="nav-button login">Login</button>
+    </div>
+  </header>
 </template>
 
 <style scoped>
-
-
 .app-header {
   display: flex;
   align-items: center;
   height: 100px;
-  padding: 0 20px; 
-  background-color: #ffffff; 
-border-bottom: 1px solid #e0e0e0;;
+  padding: 32px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .logo {
@@ -90,7 +88,7 @@ border-bottom: 1px solid #e0e0e0;;
 }
 
 .demo-button:hover {
-  background-color: #331D6E; /* Example hover effect */
+  background-color: #331d6e; /* Example hover effect */
 }
 
 .main-content {
